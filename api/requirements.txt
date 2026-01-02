@@ -1,0 +1,15 @@
+# Main
+fastapi>=0.128.0
+
+# Security
+slowapi>=0.1.9
+
+# ASGI
+uvicorn>=0.40.0
+
+# JSON/Searching
+orjson>=3.11.5
+RapidFuzz>=3.14.3
+
+# Caching
+redis>=7.1.0
