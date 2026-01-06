@@ -9,6 +9,14 @@ API_VERSION = "v1"
 API_PREFIX = f"/api/{API_VERSION}"
 API_RATE_LIMIT_ENABLED = False
 API_DEFAULT_RATE_LIMITS = ["100/minute"]
+API_DOCS_ENABLED = True
+
+# Password hashing configuration
+ARGON_TIME_COST = 3
+ARGON_MEMORY_COST = 1024
+ARGON_PARALLELISM = 4
+ARGON_HASH_LENGTH = 32
+ARGON_SALT_LENGTH = 16
 
 # CORS configuration
 CORS_ALLOWED_ORIGINS = ["*"] # Allow all origins for now
