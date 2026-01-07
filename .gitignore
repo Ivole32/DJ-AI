@@ -174,3 +174,4 @@ test*
 node_modules/
 logs/
 tmp/
+failed_videos.json
