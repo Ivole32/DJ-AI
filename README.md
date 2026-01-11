@@ -49,13 +49,20 @@ python training/train.py
 ```
 Model saved to `ml_model/models/transition_model.joblib`.
 
+
 ### 3. API: Start Backend
 ```bash
 cd api
+cp .env.example .env  # Create your .env file and fill in secrets
 pip install -r requirements.txt
 uvicorn main:app --reload
 ```
 API at http://localhost:8000
+
+> See `api/.env.example` for required environment variables (PEPPER, JWT_SECRET, POSTGRES_USER, etc.).
+
+#### Docker Note: dataset/dataset.json
+If you run the API in Docker, make sure `dataset/dataset.json` exists and is mounted into the container. Otherwise, the API will fail to start if the dataset file is missing.
 
 ### 4. Frontend: Launch Web UI
 ```bash
@@ -77,6 +84,7 @@ Frontend at http://localhost:3000
 - [ML Model README](ml_model/README.md): Model training & inference
 - [Frontend README](frontend/README.md): Web UI
 - [Devlogs](devlogs/): Progress & updates
+- [API .env.example](api/.env.example): Example environment variables for API setup
 
 ## Contributing
 

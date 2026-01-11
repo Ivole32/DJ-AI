@@ -64,7 +64,7 @@ PUBLIC_PROFILE_FIELDS = [
 
 # PostgreSQL configuration
 # (Floats must stay as floats)
-POSTGRES_HOST = "127.0.0.1" # Hostname of the PostgreSQL server (Docker Compose service name)
+POSTGRES_HOST = "postgres" # Hostname of the PostgreSQL server (Docker Compose service name)
 POSTGRES_PORT = 5432 # Port number of the PostgreSQL server
 POSGRES_USER = os.getenv("POSTGRES_USER", None)  # Use None if not set in .env to raise error later
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", None)  # Use None if not set in .env to raise error later
@@ -92,8 +92,8 @@ CORS_MAX_AGE = 600 # Cache preflight (OPTIONS) requests for 10 minutes
 COOKIE_SECURE = False  # Cookie secure flag, set to True in production with HTTPS
 
 # Dataset path
-DATASET_PATH = "dataset/dataset.json" # Path to the main dataset file
-TRACKS_CSV_PATH = "dataset/tracks.csv" # Path to the tracks CSV file
+DATASET_PATH = "../dataset/dataset.json" # Path to the main dataset file
+TRACKS_CSV_PATH = "../dataset/tracks.csv" # Path to the tracks CSV file
 
 # Debug settings
 DEBUG = True # Enable or disable debug mode
