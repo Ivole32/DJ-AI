@@ -23,7 +23,7 @@ from api.utils.track_metadata import get_track_metadata
 import csv
 
 # Initialize Redis cache handler
-cache = RedisHandler(default_ttl=600)
+cache = RedisHandler(host = "redis", default_ttl=600)
 
 
 class TrackSearcher:

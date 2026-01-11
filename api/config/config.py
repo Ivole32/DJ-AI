@@ -96,8 +96,8 @@ DATASET_PATH = "../dataset/dataset.json" # Path to the main dataset file
 TRACKS_CSV_PATH = "../dataset/tracks.csv" # Path to the tracks CSV file
 
 # Debug settings
-DEBUG = True # Enable or disable debug mode
-ENABLE_DEMO_LOGIN = True # Enable or disable demo login for testing
+DEBUG = False # Enable or disable debug mode
+ENABLE_DEMO_LOGIN = False # Enable or disable demo login for testing
 
 # Server configuration
 HOST = "0.0.0.0" # Server host (listen on all interfaces)

@@ -12,7 +12,7 @@ import { config } from '../../config.js';
  * @returns {Promise<{success: boolean, accessToken?: string}>}
  */
 async function refreshAccessToken(refreshToken) {
-  const apiUrl = process.env.API_URL || 'http://localhost:8080';
+  const apiUrl = process.env.API_URL || 'http://djai-api:8080';
   
   try {
     const response = await fetch(`${apiUrl}/api/v1/auth/refresh`, {
@@ -49,7 +49,7 @@ async function refreshAccessToken(refreshToken) {
  * @returns {Promise<{valid: boolean, user?: Object}>}
  */
 async function verifyToken(accessToken) {
-  const apiUrl = process.env.API_URL || 'http://localhost:8080';
+  const apiUrl = process.env.API_URL || 'http://djai-api:8080';
   
   try {
     const response = await fetch(`${apiUrl}/api/v1/auth/verify`, {

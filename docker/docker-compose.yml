@@ -52,6 +52,7 @@ services:
       - redis
     volumes:
       - ../:/workspace
+      - uploads-data:/workspace/api/uploads
     command: ["python", "main.py"]
     networks:
       - djai-net
@@ -74,3 +75,4 @@ services:
 volumes:
   redis_data:
   postgres-data:
+  uploads-data:
