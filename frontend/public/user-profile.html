@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View DJ profile on DJ-AI">
+    <title>User Profile - DJ-AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <script src="/js/config.js"></script>
+    <style>
+        .tab-button {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #6b7280;
+            font-weight: 500;
+        }
+        .tab-button.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+        .tab-button:hover {
+            color: #667eea;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .share-btn {
+            background: #7c3aed;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+            font-weight: 500;
+        }
+        .share-btn:hover {
+            transform: translateY(-2px);
+            background: #6d28d9;
+        }
+        .playlist-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 12px;
+            transition: transform 0.2s ease;
+        }
+        .playlist-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 sm:h-20">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl sm:text-3xl font-bold text-purple-600">DJ-AI</a>
+                </div>
+                <div class="flex items-center space-x-3 sm:space-x-4" id="navAuth">
+                    <!-- Auth/Non-auth buttons are set via JS. -->
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        <div class="profile-container">
+            <div id="errorMessage" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                Profile not found
+            </div>
+            
+            <div id="profileContent" class="hidden">
+                <!-- Profile Header -->
+                <div class="profile-section">
+                    <div class="flex justify-end mb-4">
+                        <button class="share-btn" id="shareProfileBtn">
+                            <svg class="inline w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                            Share Profile
+                        </button>
+                    </div>
+                    
+                    <div class="profile-avatar">
+                        <img id="avatarImage" src="" alt="Profile Picture">
+                    </div>
+                    
+                    <div class="text-center mb-8">
+                        <h1 id="displayUsername" class="text-3xl font-bold mb-2"></h1>
+                        <p id="displayRole" class="text-gray-600 mb-4"></p>
+                    </div>
+                    
+                    <!-- Tabs -->
+                    <div class="border-b border-gray-200 mb-6">
+                        <div class="flex justify-center space-x-8">
+                            <button class="tab-button active" data-tab="overview">Overview</button>
+                            <button class="tab-button" data-tab="playlists">Public Playlists</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Overview Tab -->
+                    <div class="tab-content active" id="overview-tab">
+                        <div class="space-y-6">
+                            <div id="bioSection">
+                                <h3 class="font-semibold text-lg mb-2">About</h3>
+                                <p id="bioText" class="text-gray-700 whitespace-pre-wrap"></p>
+                            </div>
+                            
+                            <div id="genresSection">
+                                <h3 class="font-semibold text-lg mb-2">Favorite Genres</h3>
+                                <div id="genresList" class="flex flex-wrap gap-2"></div>
+                            </div>
+                            
+                            <div id="bpmSection">
+                                <h3 class="font-semibold text-lg mb-2">Preferred BPM Range</h3>
+                                <p id="bpmRange" class="text-gray-700"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Playlists Tab -->
+                    <div class="tab-content" id="playlists-tab">
+                        <h3 class="font-semibold text-lg mb-4">Public Playlists</h3>
+                        <div id="playlistsList">
+                            <div class="text-center text-gray-500 py-8">
+                                No public playlists yet
+                            </div>
+                        </div>
+                        <!-- Modal for playlist details -->
+                        <div id="playlistModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40 hidden">
+                            <div class="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative">
+                                <button id="closePlaylistModal" class="absolute top-2 right-2 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+                                <div class="mb-4">
+                                    <div id="modalPlaylistName" class="text-xl font-bold text-gray-900 mb-2"></div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Description</label>
+                                    <div id="modalPlaylistDescription" class="text-gray-700"></div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="block text-xs font-semibold text-gray-500 mb-1">Tags</label>
+                                    <div id="modalPlaylistTags" class="flex flex-wrap gap-2"></div>
+                                </div>
+                                <div class="mb-4 flex items-center gap-4">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-gray-500 mb-1">Tracks</label>
+                                        <span id="modalPlaylistTrackCount" class="font-semibold text-purple-700"></span>
+                                    </div>
+                                </div>
+                                <h4 class="font-semibold text-lg mb-2 mt-4">Track List</h4>
+                                <div id="modalPlaylistTracks" class="max-h-96 overflow-y-auto border rounded p-2 bg-gray-50 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-gray-100"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Statistik-Tab entfernt -->
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/notifications.js"></script>
+    <script>
+        // Get username from URL path
+        const pathParts = window.location.pathname.split('/');
+        const username = pathParts[pathParts.length - 1];
+        
+        if (!username || username === 'profile') {
+            document.getElementById('errorMessage').classList.remove('hidden');
+        } else {
+            loadPublicProfile(username);
+        }
+        
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+                
+                // Add active class to clicked tab and corresponding content
+                button.classList.add('active');
+                const tabName = button.getAttribute('data-tab');
+                document.getElementById(tabName + '-tab').classList.add('active');
+            });
+        });
+        
+        // Share profile functionality
+        document.getElementById('shareProfileBtn').addEventListener('click', () => {
+            const profileUrl = window.location.href;
+            if (navigator.share) {
+                navigator.share({
+                    title: `${username}'s DJ Profile`,
+                    text: `Check out ${username}'s DJ profile on DJ-AI!`,
+                    url: profileUrl
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(profileUrl).then(() => {
+                    showNotification('Profile link copied to clipboard!', 'success');
+                }).catch(err => {
+                    console.error('Could not copy text:', err);
+                });
+            }
+        });
+        
+        async function loadPublicProfile(username) {
+            try {
+                const apiUrl = AppConfig.getApiUrl('/profile/' + username);
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    // Redirect to 404 page if profile not found
+                    window.location.href = '/404';
+                    return;
+                }
+                
+                const profile = await response.json();
+                displayProfile(profile);
+                
+            } catch (error) {
+                console.error('Error loading profile:', error);
+                // Redirect to 404 page on error
+                window.location.href = '/404';
+            }
+        }
+        
+        function displayProfile(profile) {
+            // Show profile content
+            document.getElementById('profileContent').classList.remove('hidden');
+            
+            // Set avatar
+            let avatarUrl = profile.avatar_url || `https://api.dicebear.com/7.x/initials/png?seed=${profile.username}`;
+            if (avatarUrl && !avatarUrl.startsWith('http')) {
+                avatarUrl = AppConfig.api.baseUrl + avatarUrl;
+            }
+            document.getElementById('avatarImage').src = avatarUrl;
+            
+            // Set username and role
+            document.getElementById('displayUsername').textContent = profile.username;
+            document.getElementById('displayRole').textContent = getRoleName(profile.role_id);
+            
+            // Set bio or show placeholder
+            const bioText = profile.bio && profile.bio.trim() ? profile.bio : 'This DJ hasn\'t added a bio yet.';
+            document.getElementById('bioText').textContent = bioText;
+            
+            // Set genres or show placeholder
+            const genresList = document.getElementById('genresList');
+            genresList.innerHTML = '';
+            if (profile.prefered_genres && profile.prefered_genres.length > 0) {
+                profile.prefered_genres.forEach(genre => {
+                    const badge = document.createElement('span');
+                    badge.className = 'px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm';
+                    badge.textContent = genre;
+                    genresList.appendChild(badge);
+                });
+            } else {
+                const placeholder = document.createElement('span');
+                placeholder.className = 'text-gray-500 text-sm';
+                placeholder.textContent = 'No favorite genres set yet';
+                genresList.appendChild(placeholder);
+            }
+            
+            // Set BPM range or show placeholder
+            if (profile.prefered_bpm_range && profile.prefered_bpm_range.length === 2) {
+                document.getElementById('bpmRange').textContent = 
+                    `${profile.prefered_bpm_range[0]} - ${profile.prefered_bpm_range[1]} BPM`;
+            } else {
+                document.getElementById('bpmRange').textContent = 'No BPM preference set';
+                document.getElementById('bpmRange').className = 'text-gray-500';
+            }
+            
+            // Nur Playlists laden
+            loadPlaylists(profile);
+            
+            // Update page title
+            document.title = `${profile.username} - DJ-AI`;
+        }
+        
+        // Statistik-Funktion entfernt
+        
+        async function loadPlaylists(profile) {
+            const playlistsList = document.getElementById('playlistsList');
+            playlistsList.innerHTML = '<div class="text-center text-gray-500 py-8">Loading playlists...</div>';
+            try {
+                const response = await fetch(`${AppConfig.api.baseUrl}${AppConfig.api.prefix}/playlist/public/${profile.username}`);
+                if (!response.ok) {
+                    playlistsList.innerHTML = '<div class="text-center text-gray-500 py-8">No public playlists found</div>';
+                    return;
+                }
+                const data = await response.json();
+                const playlists = data.playlists || [];
+                if (playlists.length === 0) {
+                    playlistsList.innerHTML = '<div class="text-center text-gray-500 py-8">No public playlists yet</div>';
+                    return;
+                }
+                playlistsList.innerHTML = '';
+                playlists.forEach(playlist => {
+                    const playlistEl = document.createElement('div');
+                    playlistEl.className = 'playlist-item cursor-pointer hover:bg-purple-50';
+                    playlistEl.innerHTML = `
+                        <h4 class="font-semibold text-lg mb-1">${playlist.name}</h4>
+                        <p class="text-gray-600 text-sm mb-2">${playlist.description || ''}</p>
+                        <p class="text-gray-500 text-sm">${playlist.tracks_count ?? (playlist.tracks ? playlist.tracks.length : 0)} tracks</p>
+                    `;
+                    playlistEl.addEventListener('click', () => {
+                        showPlaylistDetails(playlist);
+                    });
+                    playlistsList.appendChild(playlistEl);
+                });
+            } catch (e) {
+                playlistsList.innerHTML = '<div class="text-center text-gray-500 py-8">Error loading playlists</div>';
+            }
+        }
+
+        async function showPlaylistDetails(playlist) {
+            // Modal-Elemente
+            const modal = document.getElementById('playlistModal');
+            const closeBtn = document.getElementById('closePlaylistModal');
+            document.getElementById('modalPlaylistName').textContent = playlist.name;
+            document.getElementById('modalPlaylistDescription').textContent = playlist.description || '';
+            // Tags anzeigen
+            const tagsDiv = document.getElementById('modalPlaylistTags');
+            tagsDiv.innerHTML = '';
+            if (playlist.tags && playlist.tags.length > 0) {
+                playlist.tags.forEach(tag => {
+                    const tagEl = document.createElement('span');
+                    tagEl.className = 'px-2 py-1 bg-purple-100 text-purple-700 rounded-full text-xs';
+                    tagEl.textContent = tag;
+                    tagsDiv.appendChild(tagEl);
+                });
+            } else {
+                tagsDiv.innerHTML = '<span class="text-gray-400 text-xs">No tags</span>';
+            }
+            // Track-Anzahl anzeigen
+            const trackCountEl = document.getElementById('modalPlaylistTrackCount');
+            trackCountEl.textContent = playlist.tracks_count ?? (playlist.tracks ? playlist.tracks.length : 0);
+            // Tracks laden (API call, falls nicht schon im Objekt)
+            const tracksDiv = document.getElementById('modalPlaylistTracks');
+            tracksDiv.innerHTML = '<div class="text-gray-400 text-center py-4">Loading tracks...</div>';
+            let tracks = playlist.tracks;
+            if (!tracks || !Array.isArray(tracks)) {
+                // Hole Tracks per API (universal get-tracks endpoint)
+                try {
+                    const resp = await fetch(`${AppConfig.api.baseUrl}${AppConfig.api.prefix}/playlist/get-tracks/${playlist.playlist_id}`);
+                    if (resp.ok) {
+                        const data = await resp.json();
+                        tracks = data.tracks || [];
+                    } else {
+                        tracks = [];
+                    }
+                } catch (e) {
+                    tracks = [];
+                }
+            }
+            if (tracks.length === 0) {
+                tracksDiv.innerHTML = '<div class="text-gray-400 text-center py-4">No tracks in this playlist</div>';
+            } else {
+                tracksDiv.innerHTML = '';
+                tracks.forEach((track, idx) => {
+                    const trackEl = document.createElement('div');
+                    trackEl.className = 'flex items-center gap-2 py-1 border-b last:border-b-0';
+                    const artist = (track.artist && track.artist.toLowerCase() !== 'unknown artist') ? track.artist : (track.author && track.author.toLowerCase() !== 'unknown artist' ? track.author : '');
+                        const ytId = track.youtube_track_id;
+                        let ytButton = '';
+                        if (ytId) {
+                            ytButton = `
+                                <a href="https://www.youtube.com/watch?v=${ytId}" target="_blank" rel="noopener noreferrer" title="Open on YouTube" class="ml-2 inline-flex items-center justify-center w-8 h-8 rounded hover:bg-gray-200 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-gray-500">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                                    </svg>
+                                </a>
+                            `;
+                        } else {
+                            ytButton = `<span class='ml-2 text-gray-400 text-xs italic'>No YouTube link available</span>`;
+                        }
+                        trackEl.innerHTML = `
+                            <span class="text-gray-500 text-xs w-6">${idx + 1}.</span>
+                            <span class="font-medium flex items-center gap-1">${track.title || track.name || track.youtube_title || 'Track'}${ytButton}</span>
+                            <span class="text-gray-400 text-xs">${artist}</span>
+                        `;
+                    tracksDiv.appendChild(trackEl);
+                });
+            }
+            // Modal anzeigen
+            modal.classList.remove('hidden');
+            // Schließen-Handler
+            closeBtn.onclick = () => modal.classList.add('hidden');
+            modal.onclick = (e) => { if (e.target === modal) modal.classList.add('hidden'); };
+        }
+        
+        function getRoleName(roleId) {
+            const roles = {
+                1: 'User',
+                2: 'Premium User',
+                3: 'Moderator',
+                4: 'Admin'
+            };
+            return roles[roleId] || `Role ${roleId}`;
+        }
+        
+        // Dynamisch Buttons anzeigen wie auf index.html
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = localStorage.getItem(AppConfig.storage.userKey);
+            const navAuth = document.getElementById('navAuth');
+            navAuth.innerHTML = '';
+            if (user) {
+                navAuth.innerHTML = `
+                    <a href="/app" class="text-gray-600 hover:text-gray-900 transition">Search</a>
+                    <a href="/playlists" class="text-gray-600 hover:text-gray-900 transition">Playlists</a>
+                    <a href="/profile.html" class="text-gray-600 hover:text-gray-900 transition">Profile</a>
+                    <a href="#" id="logoutBtn" class="text-gray-600 hover:text-gray-900 transition">Logout</a>
+                `;
+                // Logout-Handler
+                document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem(AppConfig.storage.userKey);
+                    window.location.href = '/login.html';
+                });
+            } else {
+                navAuth.innerHTML = `
+                    <a href="/login.html" class="px-4 py-2 text-gray-700 hover:text-gray-900 transition">Login</a>
+                    <a href="/register.html" class="px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:bg-purple-700 transform hover:scale-105 transition">Try for Free</a>
+                `;
+            }
+        });
+    </script>
+</body>
+</html>

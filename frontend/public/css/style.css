@@ -1,0 +1,313 @@
+/* ====================================
+   DJ-AI Main Styles (Global & Search)
+   ==================================== */
+
+/* --- Global Styles --- */
+
+/* Subtle page fade-in */
+body {
+  animation: pageFade 0.2s ease-out;
+}
+
+@keyframes pageFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Touch optimization for mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove default focus outline, replaced by Tailwind focus rings */
+*:focus {
+  outline: none;
+}
+
+/* --- Gradient Text (Landing Page Style) --- */
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* --- Custom Scrollbar --- */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+/* --- Mobile Input Font Size (Prevent iOS Zoom) --- */
+@media screen and (max-width: 640px) {
+  input[type="text"],
+  input[type="search"],
+  input[type="email"] {
+    font-size: 16px !important;
+  }
+}
+
+/* --- Animations --- */
+
+/* Fade In Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Smooth opacity transition */
+.opacity-transition {
+  transition: opacity 0.3s ease-out;
+}
+
+/* --- Drag & Drop Styles --- */
+
+/* Drag preview ghost */
+.drag-ghost {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  pointer-events: none;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(6px);
+  transform: scale(0.96);
+  opacity: 0.9;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.drag-ghost.drag-ghost-active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* Playlist drop active state */
+.playlist-drop-active {
+  border-color: #8b5cf6 !important;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  background-color: rgba(139, 92, 246, 0.02);
+}
+
+/* Drop slot indicator */
+.drop-slot {
+  height: 48px;
+  border: 2px dashed rgba(139, 92, 246, 0.5);
+  border-radius: 8px;
+  background: rgba(139, 92, 246, 0.08);
+  transition: all 0.12s ease;
+}
+
+/* Drag handle cursor */
+.drag-handle {
+  cursor: grab;
+  transition: opacity 0.2s;
+}
+
+.drag-handle:hover {
+  opacity: 0.7;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* --- Track Cards --- */
+
+/* Search result card */
+.track-card {
+  transition: all 0.2s ease;
+  border: 2px solid transparent;
+}
+
+.track-card:hover {
+  border-color: #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+.track-card:active {
+  transform: translateY(0);
+}
+
+/* Playlist item card */
+.playlist-item {
+  transition: all 0.2s ease;
+  border-left: 3px solid transparent;
+}
+
+.playlist-item:hover {
+  border-left-color: #8b5cf6;
+  background-color: #faf5ff;
+}
+
+/* --- Buttons --- */
+
+/* Primary button hover effect */
+.btn-primary {
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(139, 92, 246, 0.3);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button hover effect */
+.btn-secondary {
+  transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #f3f4f6;
+}
+
+/* --- Loading States --- */
+
+/* Skeleton loader */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #f3f4f6 0%,
+    #e5e7eb 50%,
+    #f3f4f6 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Pulse animation for loading indicators */
+.pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse-ring {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+/* --- Toast/Notification Styles --- */
+
+.toast {
+  animation: toast-slide-in 0.3s ease-out;
+}
+
+@keyframes toast-slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* --- Responsive Utilities --- */
+
+/* Hide on mobile */
+@media (max-width: 640px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Hide on desktop */
+@media (min-width: 641px) {
+  .hide-desktop {
+    display: none !important;
+  }
+}
+
+/* --- Accessibility --- */
+
+/* Skip to main content link */
+.skip-to-main {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #8b5cf6;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  z-index: 100;
+}
+
+.skip-to-main:focus {
+  top: 0;
+}
+
+/* Focus visible for keyboard navigation */
+.focus-visible:focus {
+  outline: 2px solid #8b5cf6;
+  outline-offset: 2px;
+}
+
+/* --- Print Styles --- */
+
+@media print {
+  nav,
+  aside,
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+  }
+  
+  .track-card,
+  .playlist-item {
+    break-inside: avoid;
+  }
+}

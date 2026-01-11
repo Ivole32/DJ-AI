@@ -3,8 +3,14 @@ Redis handler utility.
 Provides simple get/set helpers with JSON serialization.
 """
 
+
+# Redis client
 import redis
+
+# Fast JSON serialization
 import orjson
+
+# Typing
 from typing import Any, Optional
 
 

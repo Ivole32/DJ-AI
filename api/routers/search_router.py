@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Request, Query
+from fastapi import APIRouter, Depends, Request, Query
 from api.rate_limit.limiter import limiter
 
 from api.services.track_search import TrackSearcher

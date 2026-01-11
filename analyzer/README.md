@@ -1,55 +1,38 @@
-# Audio Analyzer - DJ Track Feature Extraction
 
-This module downloads and analyzes audio from YouTube videos to extract DJ-relevant features like BPM, key, and energy. The analyzed data is used by the ML model for transition predictions.
+# Analyzer Module - DJ Track Feature Extraction
 
-## 📁 Project Structure
+Downloads and analyzes audio from YouTube videos to extract DJ-relevant features (BPM, key, energy). Outputs are used by the ML model for transition predictions.
+
+## Structure
 
 ```
 analyzer/
-├── main.py              # Entry point - orchestrates the workflow
-├── config.py            # Configuration (paths, threads, settings)
-├── pipeline.py          # Multi-threaded download & analysis pipeline
-├── analyzer.py          # Audio analysis (BPM, key detection, energy)
-├── cutter.py            # Audio cutting utilities (ffmpeg wrapper)
-├── json_loader.py       # Dataset loading utilities
-├── requirements.txt     # Python dependencies
-└── tmp/                 # Temporary audio files (auto-cleaned)
+├── main.py           # Entry point
+├── config.py         # Configuration
+├── pipeline.py       # Download & analysis pipeline
+├── analyzer.py       # Audio analysis (BPM, key, energy)
+├── cutter.py         # Audio cutting (ffmpeg)
+├── json_loader.py    # Dataset loading
+├── requirements.txt  # Python dependencies
+└── tmp/              # Temporary audio files
 ```
 
-**Output files** are saved to the project's `dataset/` directory:
-- `dataset/tracks.csv` - Main output: analyzed tracks
-- `dataset/failed_videos.json` - Failed downloads with timestamps
+**Output files** are saved to `dataset/`:
+- `tracks.csv` - Analyzed tracks
+- `failed_videos.json` - Failed downloads
 
-## 🚀 Quick Start
+## Quick Start
 
-### 1. Install System Dependencies
-
-**FFmpeg** is required for audio processing:
+### 1. Install FFmpeg
 
 **Windows:**
+- With Chocolatey: `choco install ffmpeg`
+- With winget: `winget install Gyan.FFmpeg`
+- Or download from the official FFmpeg site
 
-Option 1 - Using Chocolatey (if installed):
-```bash
-choco install ffmpeg
-```
+**Linux:** `sudo apt install ffmpeg`
 
-Option 2 - Manual Installation:
-- Follow the official guide: https://www.wikihow.com/Install-FFmpeg-on-Windows
-
-Option 3 - Using winget (Windows 10/11):
-```bash
-winget install Gyan.FFmpeg
-```
-
-**Linux:**
-```bash
-sudo apt install ffmpeg
-```
-
-**macOS:**
-```bash
-brew install ffmpeg
-```
+**macOS:** `brew install ffmpeg`
 
 ### 2. Install Python Dependencies
 
@@ -57,6 +40,16 @@ brew install ffmpeg
 cd analyzer
 pip install -r requirements.txt
 ```
+
+### 3. Run Analyzer
+
+```bash
+python main.py
+```
+This will process tracks listed in `../dataset/dataset.json` and output results to `../dataset/tracks.csv`.
+
+---
+For more details, see the main project README.
 
 ### 3. Run the Analyzer
 

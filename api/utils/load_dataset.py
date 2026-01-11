@@ -15,5 +15,8 @@ def load_dataset() -> list:
     Returns:
         list: List of mixes with tracklists
     """
-    with open(DATASET_PATH, "rb") as f:
-        return orjson.loads(f.read())
+    try:
+        with open(DATASET_PATH, "rb") as f:
+            return orjson.loads(f.read())
+    except FileNotFoundError:
+        raise FileNotFoundError(f"Dataset file not found at path: {DATASET_PATH}")

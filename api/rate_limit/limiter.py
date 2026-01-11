@@ -2,11 +2,12 @@
 Main rate limiter configuration for the API.
 """
 
-# Import necessary libraries
+
+# SlowAPI for rate limiting
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 
-# Import configuration settings
+# Configuration settings
 from api.config.config import API_RATE_LIMIT_ENABLED, API_DEFAULT_RATE_LIMITS
 
 # Limiter configuration

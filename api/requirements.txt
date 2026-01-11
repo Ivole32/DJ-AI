@@ -1,6 +1,10 @@
 # Main
 fastapi>=0.128.0
 
+# Validation
+pydantic>=2.12.5
+pydantic[email]>=2.12.5
+
 # Security
 slowapi>=0.1.9
 
@@ -11,5 +15,24 @@ uvicorn>=0.40.0
 orjson>=3.11.5
 RapidFuzz>=3.14.3
 
+# File loading
+pillow>=12.1.0
+
+# FastAPI file upload dependencie
+python-multipart>=0.0.21
+
+# JWT for authentication
+PyJWT>=2.8.0
+
 # Caching
 redis>=7.1.0
+
+# Database
+psycopg[binary]>=3.3.2
+psycopg[pool]>=3.3.2
+
+# Hashing
+argon2-cffi>=25.1.0
+
+# .env loading
+python-dotenv>=1.2.1

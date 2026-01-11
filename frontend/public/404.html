@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Page Not Found | DJ-AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          animation: {
+            'fade-in': 'fadeIn 0.6s ease-out',
+            'float': 'float 3s ease-in-out infinite',
+            'glitch': 'glitch 1s linear infinite',
+          },
+          keyframes: {
+            fadeIn: {
+              '0%': { opacity: '0', transform: 'translateY(20px)' },
+              '100%': { opacity: '1', transform: 'translateY(0)' },
+            },
+            float: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-20px)' },
+            },
+            glitch: {
+              '2%, 64%': { transform: 'translate(2px, 0) skew(0deg)' },
+              '4%, 60%': { transform: 'translate(-2px, 0) skew(0deg)' },
+              '62%': { transform: 'translate(0, 0) skew(5deg)' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <link rel="stylesheet" href="css/global.css">
+  
+  <style>
+    .glitch-container {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .glitch-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.8;
+    }
+    
+    .glitch-layer:nth-child(2) {
+      color: #667eea;
+      animation: glitch 1s linear infinite;
+      animation-delay: 0.1s;
+    }
+    
+    .glitch-layer:nth-child(3) {
+      color: #f093fb;
+      animation: glitch 1s linear infinite;
+      animation-delay: 0.2s;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 overflow-x-hidden">
+
+  <!-- Navigation -->
+  <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200" style="box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        <div class="flex items-center">
+          <a href="/" class="text-2xl sm:text-3xl font-bold text-purple-600">DJ-AI</a>
+        </div>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="/#features" class="text-gray-700 hover:text-gray-900 transition">Features</a>
+          <a href="/#how-it-works" class="text-gray-700 hover:text-gray-900 transition">How it Works</a>
+          <a href="/#pricing" class="text-gray-700 hover:text-gray-900 transition">Pricing</a>
+        </div>
+        <div class="flex items-center space-x-3 sm:space-x-4">
+          <a href="/login" class="hidden sm:inline-block px-4 py-2 text-gray-700 hover:text-gray-900 transition">
+            Login
+          </a>
+          <a href="/register" class="px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-lg font-semibold hover:shadow-lg hover:bg-purple-700 transform hover:scale-105 transition">
+            Try for Free
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 404 Section -->
+  <section class="pt-32 sm:pt-40 pb-20 sm:pb-32 bg-purple-600 text-white min-h-screen flex items-center">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div class="text-center animate-fade-in">
+        
+        <!-- 404 Number with Glitch Effect -->
+        <div class="mb-8 animate-float">
+          <div class="glitch-container inline-block">
+            <h1 class="text-9xl sm:text-[12rem] font-black">404</h1>
+            <h1 class="text-9xl sm:text-[12rem] font-black glitch-layer">404</h1>
+            <h1 class="text-9xl sm:text-[12rem] font-black glitch-layer">404</h1>
+          </div>
+        </div>
+        
+        <!-- Message -->
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+          Page Not Found
+        </h2>
+        
+        <p class="text-xl sm:text-2xl text-purple-100 max-w-2xl mx-auto mb-12">
+          Oops! The track you're looking for seems to have dropped off the playlist.
+        </p>
+        
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+          <a href="/" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-bold text-lg hover:bg-gray-100 transform hover:scale-105 transition shadow-xl inline-flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+            <span>Go Home</span>
+          </a>
+          <a href="/app" class="px-8 py-4 bg-white/10 border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white/20 transition backdrop-blur inline-flex items-center justify-center space-x-2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+            </svg>
+            <span>Search Tracks</span>
+          </a>
+        </div>
+        
+        <!-- Quick Links Grid -->
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+            <h3 class="text-xl font-bold mb-6">Popular Pages</h3>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a href="/app" class="flex flex-col items-center space-y-3 p-6 rounded-xl hover:bg-white/10 transition group">
+                <div class="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                </div>
+                <span class="font-semibold">Track Search</span>
+              </a>
+              
+              <a href="/playlists" class="flex flex-col items-center space-y-3 p-6 rounded-xl hover:bg-white/10 transition group">
+                <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/>
+                  </svg>
+                </div>
+                <span class="font-semibold">Playlists</span>
+              </a>
+              
+              <a href="/profile" class="flex flex-col items-center space-y-3 p-6 rounded-xl hover:bg-white/10 transition group">
+                <div class="w-12 h-12 bg-pink-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
+                  </svg>
+                </div>
+                <span class="font-semibold">Profile</span>
+              </a>
+              
+              <a href="/login" class="flex flex-col items-center space-y-3 p-6 rounded-xl hover:bg-white/10 transition group">
+                <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center group-hover:scale-110 transition">
+                  <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"/>
+                  </svg>
+                </div>
+                <span class="font-semibold">Login</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <h3 class="text-white font-bold text-lg mb-4 text-purple-600">DJ-AI</h3>
+          <p class="text-sm">AI-powered track search and playlist management for professional DJs.</p>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/#features" class="hover:text-white transition">Features</a></li>
+            <li><a href="/#how-it-works" class="hover:text-white transition">How it Works</a></li>
+            <li><a href="/#pricing" class="hover:text-white transition">Pricing</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-white transition">About</a></li>
+            <li><a href="/" class="hover:text-white transition">Blog</a></li>
+            <li><a href="/" class="hover:text-white transition">Careers</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="hover:text-white transition">Privacy</a></li>
+            <li><a href="/" class="hover:text-white transition">Terms</a></li>
+            <li><a href="/" class="hover:text-white transition">Security</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 pt-8 text-center text-sm">
+        <p>&copy; 2026 DJ-AI. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

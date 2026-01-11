@@ -1,4 +1,8 @@
+
+# Numpy for numerical operations
 import numpy as np
+
+# Librosa for audio analysis
 import librosa
 
 # =========================

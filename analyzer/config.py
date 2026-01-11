@@ -4,8 +4,14 @@ Configuration for the audio analyzer.
 Defines paths, performance settings, and audio processing parameters.
 """
 
+
+# OS utilities
 import os
+
+# Multiprocessing for CPU count
 from multiprocessing import cpu_count
+
+# Path utilities
 from pathlib import Path
 
 # Project structure
@@ -20,7 +26,7 @@ TMP_DIR = ANALYZER_DIR / "tmp"
 OUT_DIR = DATASET_DIR
 
 # Performance
-DOWNLOAD_THREADS = 10
+DOWNLOAD_THREADS = 1
 ANALYZE_PROCESSES = cpu_count()
 
 # Audio cut

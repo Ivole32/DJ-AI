@@ -175,3 +175,12 @@ node_modules/
 logs/
 tmp/
 failed_videos.json
+
+# Upload directory
+uploads/
+
+# Postgres data
+data/
+
+# Old frontend server
+server.old.js

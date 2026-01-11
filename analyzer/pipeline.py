@@ -9,22 +9,34 @@ This module coordinates the full workflow:
 Uses multi-threading for downloads and multi-processing for analysis.
 """
 
+
+# OS, JSON, CSV utilities
 import os
 import json
 import csv
+
+# Threading and multiprocessing
 import threading
-import subprocess
 from queue import Queue
 from multiprocessing import Pool
+import multiprocessing as mp
+mp.freeze_support()
+
+# Subprocess for external commands
+import subprocess
+
+# Progress bar
 from tqdm import tqdm
+
+# Time and random utilities
 import time
 import random
 from datetime import datetime
 
-import multiprocessing as mp
-mp.freeze_support()
-
+# Analyzer config
 import config
+
+# Audio cutting and analysis
 from cutter import center_cut
 from analyzer import analyze_audio
 
@@ -111,6 +123,7 @@ def download_worker(pbar):
                 [
                     "python", "-m", "yt_dlp",
                     #"-U",
+                    #"--proxy", "socks5h://127.0.0.1:1080",
                     "--ignore-errors",
                     "-f", "bestaudio",
                     "--extract-audio",

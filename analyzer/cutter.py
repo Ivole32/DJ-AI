@@ -4,8 +4,14 @@ This module provides functions to extract duration information
 and cut audio files to specific lengths, centered on the middle.
 """
 
+
+# Subprocess for running ffmpeg/ffprobe
 import subprocess
+
+# JSON for parsing output
 import json
+
+# OS utilities
 import os
 
 def get_duration(file):

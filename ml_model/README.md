@@ -1,62 +1,54 @@
+
 # ML Model - DJ Track Transition Prediction
 
-This module contains the machine learning components for predicting good track transitions in DJ sets.
+Machine learning module for predicting good track transitions in DJ sets.
 
-## 📁 Project Structure
+## Structure
 
 ```
 ml_model/
-├── config.py              # Centralized configuration (paths)
-├── data_preparation/      # Data extraction and preprocessing
+├── config.py              # Configuration
+├── data_preparation/      # Data extraction/preprocessing
 │   └── export_transitions.py
-├── training/              # Model training pipeline
+├── training/              # Model training
 │   ├── training_data.py
 │   └── train.py
-├── inference/             # Prediction and serving
+├── inference/             # Prediction/validation
 │   ├── predict.py
 │   └── validation.py
 ├── utils/                 # Shared utilities
 │   └── feature_builder.py
-├── models/                # Trained model files (.joblib)
+├── models/                # Trained model files
 │   └── transition_model.joblib
 └── requirements.txt       # Python dependencies
 ```
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Install Dependencies
-
 ```bash
 cd ml_model
 pip install -r requirements.txt
 ```
 
 ### 2. Prepare Training Data
-
-Extract transitions from the dataset:
-
 ```bash
 python data_preparation/export_transitions.py
 ```
-
-This creates `dataset/transitions.csv` containing all track-to-track transitions from DJ mixes.
+Creates `dataset/transitions.csv` with all track-to-track transitions from DJ mixes.
 
 ### 3. Train the Model
-
 ```bash
 python training/train.py
 ```
+Requires:
+- `dataset/tracks.csv` (analyzed tracks)
+- `dataset/transitions.csv` (real DJ transitions)
 
-**Requirements:**
-- `dataset/tracks.csv` with analyzed tracks (BPM, key, Camelot, energy)
-- `dataset/transitions.csv` with real DJ transitions
+The model is saved to `models/transition_model.joblib`.
 
-The training process:
-- Loads track features (including **Camelot notation** for harmonic key matching)
-- Loads transitions from DJ mixes
-- Builds training set with positive (real transitions) and negative (random pairs) examples
-- Trains a HistGradientBoostingClassifier using features like BPM difference and **Camelot key distance**
-- Saves model to `models/transition_model.joblib`
+---
+For more details, see the main project README.
 
 **Note:** The Camelot Wheel notation (e.g., "8A", "11B") is crucial for the model - it enables harmonic mixing predictions based on DJ key compatibility.
 

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your DJ playlists - Create, organize, and curate perfect playlists for your DJ sets with AI-powered recommendations.">
+    <meta name="keywords" content="DJ playlists, playlist management, music organization, DJ sets">
+    <title>My Playlists - DJ-AI | Playlist Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/playlist.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200" style="box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="text-2xl font-bold text-purple-600">DJ-AI</a>
+                <div class="flex items-center space-x-6">
+                    <a href="/app" class="text-gray-600 hover:text-gray-900 transition">Search</a>
+                    <a href="/playlists" class="text-gray-900 font-medium border-b-2 border-blue-600">Playlists</a>
+                    <a href="/profile" class="text-gray-600 hover:text-gray-900 transition">Profile</a>
+                    <a href="#" id="logoutBtn" class="text-gray-600 hover:text-gray-900 transition">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        <div class="playlists-header">
+            <h1>My Playlists</h1>
+            <button class="btn btn-primary" id="createPlaylistBtn">Create New Playlist</button>
+        </div>
+        
+        <div class="playlists-grid" id="playlistsGrid">
+            <!-- Playlists will be dynamically inserted here -->
+        </div>
+        
+        <!-- Modal for new playlist -->
+        <div id="createPlaylistModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Create New Playlist</h2>
+                <form id="createPlaylistForm">
+                    <div class="form-group">
+                        <label for="playlistName">Name</label>
+                        <input type="text" id="playlistName" name="playlistName" required placeholder="My New Playlist">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="playlistDescription">Description</label>
+                        <textarea id="playlistDescription" name="playlistDescription" rows="3" placeholder="Describe your playlist..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="playlistTags">Tags (comma-separated)</label>
+                        <input type="text" id="playlistTags" name="playlistTags" placeholder="House, Party, Summer">
+                    </div>
+                    
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="playlistPublic" name="playlistPublic">
+                        <label for="playlistPublic">Make Public</label>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Create</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Modal for playlist details -->
+        <div id="playlistDetailModal" class="modal">
+            <div class="modal-content playlist-detail">
+                <div class="playlist-header">
+                    <h2 id="playlistTitle">Playlist Name</h2>
+                    <div class="playlist-actions">
+                        <button class="btn btn-primary" id="editTracksBtn">Edit Tracks</button>
+                        <!-- Edit Details Button entfernt -->
+                        <button class="btn btn-danger" id="deletePlaylistBtn">Delete</button>
+                        <span class="close">&times;</span>
+                    </div>
+                </div>
+                
+                <!-- View Mode -->
+                <div id="playlistViewMode">
+                    <div class="playlist-info">
+                        <p id="playlistDescription">Playlist Description</p>
+                        <div class="playlist-tags" id="playlistTagsDisplay"></div>
+                        <p class="playlist-meta">
+                            <span id="trackCountInfo">0 Tracks</span> • 
+                            <span id="publicStatusInfo">Private</span> • 
+                            <span id="createdInfo">Created on 01/01/2026</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Edit Mode -->
+                <div id="playlistEditMode" style="display: none;">
+                    <form id="editPlaylistForm">
+                        <div class="form-group">
+                            <label for="editPlaylistName">Name</label>
+                            <input type="text" id="editPlaylistName" name="editPlaylistName" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editPlaylistDescription">Description</label>
+                            <textarea id="editPlaylistDescription" name="editPlaylistDescription" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="editPlaylistTags">Tags (comma-separated)</label>
+                            <input type="text" id="editPlaylistTags" name="editPlaylistTags">
+                        </div>
+                        
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="editPlaylistPublic" name="editPlaylistPublic">
+                            <label for="editPlaylistPublic">Make Public</label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                            <!-- Cancel Button entfernt -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+<script src="js/notifications.js"></script>
+<script src="js/confirm-dialog.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/utils/api-client.js"></script>
+<script src="js/services/playlist-service.js"></script>
+<script src="js/playlist-ui.js"></script>
+
+</body>
+</html>

@@ -2,10 +2,13 @@
 Middleware to add custom headers to API responses.
 """
 
+
+# FastAPI request and response
 from fastapi import Request
 from fastapi.responses import Response
 
-from api.config.config import API_VERSION
+# API config
+from api.config.config import API_VERSION, API_PREFIX
 
 def add_header_middleware(app):
     @app.middleware("http")
@@ -13,10 +16,20 @@ def add_header_middleware(app):
         response: Response = await call_next(request)
 
         response.headers["X-API-Version"] = API_VERSION
-        response.headers["X-Content-Type-Options"] = "nosniff" # Security header to prevent MIME type sniffing
-        response.headers["Cache-Control"] = "no-store"
+        response.headers["X-Content-Type-Options"] = "nosniff"
 
+        if request.method == "OPTIONS":
+            # Allow browser to cache CORS preflight by letting middlewar/CORS handle it
+            pass
+        if request.url.path.startswith(f"{API_PREFIX}/config"):
+            # Allow caching for config endpoint to reduce load
+            response.headers["Cache-Control"] = "public, max-age=3600"  # Cache for 1 hour
+        else:
+            # Prevent caching for all real API responses
+            response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, proxy-revalidate"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
 
         return response
-    
+
     return app

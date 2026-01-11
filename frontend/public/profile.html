@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your DJ-AI profile - Update your settings, preferences.">
+    <meta name="keywords" content="DJ profile, user settings, music preferences">
+    <title>My Profile - DJ-AI | User Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/profile.css">
+    <script src="/js/config.js"></script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200" style="box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <a href="/" class="text-2xl font-bold text-purple-600">DJ-AI</a>
+                <div class="flex items-center space-x-6">
+                    <a href="/app" class="text-gray-600 hover:text-gray-900 transition">Search</a>
+                    <a href="/playlists" class="text-gray-600 hover:text-gray-900 transition">Playlists</a>
+                    <a href="/profile" class="text-gray-900 font-medium border-b-2 border-blue-600">Profile</a>
+                    <a href="#" id="logoutBtn" class="text-gray-600 hover:text-gray-900 transition">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12">
+        <div class="profile-container">
+            <div class="flex justify-between items-center mb-6">
+                <h1>My Profile</h1>
+                <button class="btn btn-primary" id="shareProfileBtn" style="display: flex; align-items: center; gap: 8px;">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                    </svg>
+                    Share My Profile
+                </button>
+            </div>
+            
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <img id="avatarImage" src="https://api.dicebear.com/7.x/initials/png?seed=DJ" alt="Profile Picture">
+                    <div style="display: flex; gap: 8px; margin-top: 12px;">
+                        <button class="btn btn-secondary" id="changeAvatarBtn">Change Picture</button>
+                        <button class="btn btn-danger" id="resetAvatarBtn" style="background: #dc2626;">Reset to Default</button>
+                    </div>
+                    <input type="file" id="avatarInput" accept="image/jpeg,image/jpg,image/png,image/webp" style="display: none;">
+                </div>
+                
+                <div id="profileFeedback" class="feedback-message" style="display: none;"></div>
+                <form id="profileForm" class="profile-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" value="Loading..." disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userId">User ID</label>
+                        <input type="text" id="userId" name="userId" value="Loading..." disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="roleId">Role</label>
+                        <input type="text" id="roleId" name="roleId" value="Loading..." disabled>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bio">Bio</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Tell us about yourself..." maxlength="500"></textarea>
+                        <small class="text-gray-600">Maximum 500 characters</small>
+                    </div>
+                    
+                    <h3>Music Preferences</h3>
+                    
+                    <div class="form-group">
+                        <label for="favoriteGenres">Favorite Genres</label>
+                        <input type="text" id="favoriteGenres" name="favoriteGenres" placeholder="e.g., House, Techno, Trance">
+                        <small class="text-gray-600">Enter genres separated by commas (max 10)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="bpmRange">Preferred BPM Range</label>
+                        <div class="bpm-range">
+                            <input type="number" id="minBpm" name="minBpm" value="120" min="60" max="200">
+                            <span>to</span>
+                            <input type="number" id="maxBpm" name="maxBpm" value="140" min="60" max="200">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+            
+            <div class="profile-section">
+                <h2>Change Password</h2>
+                <div id="passwordFeedback" class="feedback-message" style="display: none;"></div>
+                <form id="passwordForm" class="password-form">
+                    <div class="form-group">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" name="currentPassword" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" name="newPassword" required minlength="8">
+                        <small class="text-gray-600">Minimum 8 characters</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-secondary">Change Password</button>
+                </form>
+            </div>
+            
+            <!-- Statistik-Sektion entfernt -->
+            
+            <div class="profile-section danger-zone">
+                <h2>Danger Zone</h2>
+                <button class="btn btn-danger" id="deleteAccountBtn">Delete Account</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/notifications.js"></script>
+    <script src="/js/confirm-dialog.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/profile.js"></script>
+    <script>
+        // Share profile functionality
+        document.getElementById('shareProfileBtn').addEventListener('click', () => {
+            const username = document.getElementById('username').value;
+            if (!username || username === 'Loading...') {
+                showFeedback(document.getElementById('profileFeedback'), 'Please wait for profile to load', 'error');
+                return;
+            }
+            
+            const profileUrl = window.location.origin + '/profile/' + username;
+            if (navigator.share) {
+                navigator.share({
+                    title: username + "'s DJ Profile",
+                    text: `Check out my DJ profile on DJ-AI!`,
+                    url: profileUrl
+                }).catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback: copy to clipboard
+                navigator.clipboard.writeText(profileUrl).then(() => {
+                    showFeedback(document.getElementById('profileFeedback'), 'Profile link copied to clipboard!', 'success');
+                }).catch(err => {
+                    console.error('Could not copy text:', err);
+                    showFeedback(document.getElementById('profileFeedback'), 'Could not copy link', 'error');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

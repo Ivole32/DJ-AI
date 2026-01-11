@@ -1,50 +1,93 @@
-# AI for DJs
 
-This project builds an intelligent DJ tracklist generator by learning track transitions from real DJ sets and combining them with audio features like BPM, energy, and danceability.
+# DJ-AI
 
-## ⚠️ Disclaimer
+An intelligent DJ tracklist generator and playlist management platform powered by machine learning and audio analysis.
 
-**Please note:** Some features described in this documentation will be released gradually over time. This approach helps maintain project organization and ensures quality with each release. Stay tuned for updates!
+## Features
 
-## 🎯 Features
+- **Audio Analysis**: Extracts BPM, musical key (Camelot notation), and energy from YouTube tracks
+- **ML-Powered Predictions**: Suggests compatible next tracks using a trained model
+- **Harmonic Mixing**: Ensures key-compatible transitions
+- **REST API**: FastAPI backend with Redis and PostgreSQL
+- **Web Interface**: Modern frontend for searching tracks and building playlists
+- **Dataset**: Built on real DJ mixes ([mir-aidj/djmix-dataset](https://github.com/mir-aidj/djmix-dataset))
 
-- **🎵 Audio Analysis**: Extracts BPM, musical key (including Camelot notation), and energy levels from YouTube videos
-- **🤖 ML-Powered Predictions**: Machine learning model trained on real DJ transitions to suggest compatible next tracks
-- **🎚️ Harmonic Mixing**: Uses Camelot Wheel notation for perfect key-compatible transitions
-- **🌐 REST API**: FastAPI backend with Redis caching and PostgreSQL database
-- **💻 Web Interface**: User-friendly frontend for searching tracks and building playlists
-- **📊 Dataset**: Trained on real DJ mixes from the mir-aidj/djmix-dataset
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 DJ-AI/
-├── analyzer/          # Audio feature extraction from YouTube videos
-│   ├── main.py        # Entry point for batch processing
-│   ├── analyzer.py    # BPM, key, and energy detection
-│   └── pipeline.py    # Multi-threaded download & analysis
-│
-├── ml_model/          # Machine learning model for transition prediction
-│   ├── training/      # Model training pipeline
-│   ├── inference/     # Prediction API
-│   └── models/        # Trained model files
-│
-├── api/               # FastAPI REST backend
-│   ├── routers/       # API endpoints (prediction, search)
-│   ├── services/      # Business logic
-│   ├── database/      # PostgreSQL integration
-│   └── cache/         # Redis caching layer
-│
-├── frontend/          # Web interface
-│   ├── public/        # HTML, CSS, JavaScript
-│   └── server.js      # Static file server
-│
-└── dataset/           # Training data and output files
-    ├── dataset.json   # DJ mix metadata
-    ├── transitions.csv # Extracted track transitions
-    ├── tracks.csv     # Analyzed tracks with BPM, key, energy
-    └── failed_videos.json # Failed video downloads
+├── analyzer/      # Audio feature extraction
+├── ml_model/      # Machine learning model
+├── api/           # FastAPI backend
+├── frontend/      # Web interface (Node.js)
+├── dataset/       # Training data and outputs
+└── devlogs/       # Development logs
 ```
+
+## Quick Start
+
+### Prerequisites
+- Python 3.11.9
+- FFmpeg (audio processing)
+- Redis (optional, for caching)
+- PostgreSQL (for user data)
+- Node.js 16+ (for frontend)
+
+### 1. Analyzer: Extract Audio Features
+```bash
+cd analyzer
+pip install -r requirements.txt
+python main.py
+```
+Creates `dataset/tracks.csv` with BPM, key, and energy data.
+
+### 2. ML Model: Train Transition Predictor
+```bash
+cd ml_model
+python data_preparation/export_transitions.py
+python training/train.py
+```
+Model saved to `ml_model/models/transition_model.joblib`.
+
+### 3. API: Start Backend
+```bash
+cd api
+pip install -r requirements.txt
+uvicorn main:app --reload
+```
+API at http://localhost:8000
+
+### 4. Frontend: Launch Web UI
+```bash
+cd frontend
+npm install
+npm start
+```
+Frontend at http://localhost:3000
+
+## Technology Stack
+
+- **Backend:** FastAPI, scikit-learn, pandas, numpy, Redis, PostgreSQL
+- **Audio:** librosa, yt-dlp, essentia, FFmpeg
+- **Frontend:** Node.js, Express, Vanilla JS, HTML5, CSS3
+
+## Documentation
+
+- [Analyzer README](analyzer/README.md): Audio analysis
+- [ML Model README](ml_model/README.md): Model training & inference
+- [Frontend README](frontend/README.md): Web UI
+- [Devlogs](devlogs/): Progress & updates
+
+## Contributing
+
+Contributions open April 2026. Until then, feel free to open issues or follow development.
+
+## Legal Disclaimer
+
+This project is for educational and research purposes only. Use at your own risk and ensure compliance with all applicable laws and third-party terms.
+
+---
+Made with ❤️ by [Ivole32](https://github.com/Ivole32)
 
 ## 🚀 Quick Start
 
