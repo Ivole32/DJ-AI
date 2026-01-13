@@ -4,6 +4,6 @@ scipy==1.11.4
 librosa==0.10.2.post1
 soundfile==0.12.1
 yt-dlp==2025.12.8
-tqdm==4.66.1
+tqdm==4.66.3
 
 # Dont forget that ffmpeg is needed too
