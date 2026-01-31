@@ -94,6 +94,14 @@
 </head>
 
 <body class="bg-gray-50 overflow-x-hidden">
+  <!-- Private Demo Modal -->
+  <div id="privateDemoModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity">
+    <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full text-center animate-fade-in">
+      <h2 class="text-2xl font-bold text-purple-700 mb-4">Private Demo</h2>
+      <p class="text-gray-700 mb-6">This site is a <span class="font-semibold">private demo</span> and is not open to the public. Please do not share the link or any content without perminission. I do not sell any services. Sign up at own risk. </p>
+      <button id="closeDemoModal" class="mt-2 px-6 py-2 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 transition">I understand</button>
+    </div>
+  </div>
 
   <!-- Navigation -->
   <nav class="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-gray-200">
@@ -522,9 +530,9 @@
         <div>
           <h5 class="text-white font-semibold mb-4">Support</h5>
           <ul class="space-y-2 text-sm">
-            <li><a href="#" class="hover:text-white transition">Help</a></li>
-            <li><a href="#" class="hover:text-white transition">Documentation</a></li>
-            <li><a href="mailto:support@dj-ai.com" class="hover:text-white transition">Contact</a></li>
+            <li><a href="https://github.com/Ivole32/DJ-AI?tab=readme-ov-file#-support" class="hover:text-white transition">Help</a></li>
+            <li><a href="https://github.com/Ivole32/DJ-AI" class="hover:text-white transition">Documentation</a></li>
+            <li><a href="mailto:ivole32@dj-ai.ideora.net" class="hover:text-white transition">Contact</a></li>
           </ul>
         </div>
         
@@ -637,6 +645,16 @@
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
+    });
+    // Private Demo Modal Logic
+    document.addEventListener('DOMContentLoaded', function () {
+      const privateDemoModal = document.getElementById('privateDemoModal');
+      const closeDemoModal = document.getElementById('closeDemoModal');
+      if (privateDemoModal && closeDemoModal) {
+        closeDemoModal.addEventListener('click', () => {
+          privateDemoModal.classList.add('hidden');
+        });
+      }
     });
   </script>
 
