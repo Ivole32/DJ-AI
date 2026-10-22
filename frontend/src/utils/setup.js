@@ -26,9 +26,9 @@ export function setupMiddleware(app) {
   // Rate limiting
   app.use(createRateLimiter());
   
-  // Body parsing
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
+  // Body parsing (inflate disabled: compressed bodies hit the Brotli decoder, CVE-2026-111497)
+  app.use(express.json({ inflate: false }));
+  app.use(express.urlencoded({ extended: true, inflate: false }));
   
   // Cookie parsing (for JWT)
   app.use(cookieParser());
